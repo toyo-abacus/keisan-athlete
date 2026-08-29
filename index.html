@@ -72,6 +72,47 @@ select,input.answer{width:100%;padding:11px;border:1px solid #ccc;border-radius:
   font-weight:400 !important;
   font-variant-numeric:normal !important;
 }
+</style><style id="responsive-layout-fix">
+.problem-row{
+  display:grid;
+  grid-template-columns:clamp(24px,7vw,36px) minmax(0,1fr) clamp(76px,20vw,110px);
+  align-items:center;
+  gap:clamp(5px,1.8vw,10px);
+}
+.problem{
+  min-width:0;
+  white-space:nowrap;
+  overflow-x:auto;
+  overflow-y:hidden;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+}
+.problem::-webkit-scrollbar{display:none}
+.answer{
+  width:100%;
+  min-width:0;
+  box-sizing:border-box;
+}
+@media (max-width:600px){
+  .problem-row{
+    grid-template-columns:clamp(22px,7vw,30px) minmax(0,1fr) clamp(68px,21vw,96px);
+    gap:clamp(4px,1.5vw,8px);
+  }
+  .problem{
+    font-size:clamp(15px,4.7vw,19px);
+    text-align:right;
+  }
+  .answer{
+    font-size:clamp(14px,4vw,17px);
+    padding-left:6px;
+    padding-right:6px;
+  }
+}
+@media (min-width:601px) and (max-width:900px){
+  .problem-row{
+    grid-template-columns:32px minmax(0,1fr) 100px;
+  }
+}
 </style></head>
 <body>
 <header><h1>計算アスリート</h1><p>均等数字対応・スマホ／パソコン対応</p></header>
