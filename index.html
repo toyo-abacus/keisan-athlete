@@ -268,6 +268,10 @@ select,input.answer{width:100%;padding:11px;border:1px solid #ccc;border-radius:
 .reset-card p{font-size:12px;color:#666;line-height:1.6}
 .reset-actions{display:flex;gap:8px;justify-content:center;margin-top:15px}
 .reset-actions button{min-width:100px}
+</style><style id="setup-reset-style">
+.setup-reset-wrap{margin-top:10px;text-align:right}
+#setupResetRecordsBtn{background:#fff;border:1px solid #d8dbe2;color:#777;box-shadow:none;font-size:11px;padding:7px 10px}
+#setupResetRecordsBtn:hover{color:#b91c1c;border-color:#e3b9b9}
 </style></head>
 <body>
 <header><h1>計算アスリート</h1><p>均等数字対応・スマホ／パソコン対応</p></header>
@@ -277,7 +281,7 @@ select,input.answer{width:100%;padding:11px;border:1px solid #ccc;border-radius:
 <div class="setup-record-title">🏆 選択中の種目の記録</div>
 <div id="setupBest" class="setup-best"></div>
 <div class="setup-top10-title">この端末のTOP10</div>
-<div id="setupTop10"></div>
+<div id="setupTop10"></div><div class="setup-reset-wrap"><button type="button" id="setupResetRecordsBtn">🗑 記録をリセット</button></div>
 </div>
 <div class="grid">
 <div><div class="note">種目</div><select id="kind"><option value="mul">かけ算</option><option value="div">わり算</option><option value="sqrt">開平</option><option value="mitori">見取算</option></select></div>
@@ -805,6 +809,28 @@ window.addEventListener("DOMContentLoaded",function(){
  }
  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",bindReset);else bindReset();
  window.addEventListener("load",bindReset);
+})();
+</script><script id="setup-reset-events">
+(function(){
+ function bindSetupReset(){
+  const b=$("setupResetRecordsBtn");
+  if(!b||b.dataset.bound)return;
+  b.dataset.bound="1";
+  b.onclick=function(e){
+    e.preventDefault();
+    const kind=$("kind")?.value||"";
+    const label=({mul:"かけ算",div:"わり算",sqrt:"開平",mitori:"見取算"}[kind]||kind);
+    if(!confirm(`「${label}」の記録をすべてリセットしますか？\\nこの操作は元に戻せません。`))return;
+    let records=[];
+    try{records=JSON.parse(localStorage.getItem("keisanAthleteRecordsV2")||"[]")}catch(err){records=[]}
+    records=records.filter(r=>r.kind!==kind);
+    localStorage.setItem("keisanAthleteRecordsV2",JSON.stringify(records));
+    try{renderSetupRecords()}catch(err){}
+    try{renderLocalRanking()}catch(err){}
+  };
+ }
+ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",bindSetupReset);else bindSetupReset();
+ window.addEventListener("load",bindSetupReset);
 })();
 </script></body>
 </html>
