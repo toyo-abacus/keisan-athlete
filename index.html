@@ -377,7 +377,25 @@ button.secondary{
 </style>
 <style id="record-style">
 #recordBox{margin-top:18px;padding-top:16px;border-top:1px solid #e4e7ec}.record-title{font-weight:900;font-size:16px;margin-bottom:9px}.record-row{display:flex;gap:8px}#recordName{flex:1;min-width:0;border:1px solid #d8dce4;border-radius:10px;padding:11px 10px;font-size:16px}.record-message{margin-top:8px;font-size:12px;color:#5f6470}.record-list{margin-top:12px}.record-list-title{font-size:12px;font-weight:900;color:#6f7480;margin-bottom:5px}.record-item{display:flex;justify-content:space-between;padding:7px 9px;border-bottom:1px solid #eceef2;font-size:13px}@media(max-width:600px){.record-row{gap:6px}.record-row button{white-space:nowrap;padding:10px 12px}}
-</style></head>
+</style>
+<style id="sqrt-mobile-only-fix">
+/* 開平の√だけ通常フォント。後ろの数字は既存の珠算数字フォントを維持 */
+.sqrt-symbol{
+  font-family:"Times New Roman", "Noto Serif", serif !important;
+  font-weight:400 !important;
+  font-style:normal !important;
+  display:inline-block;
+  font-size:1.25em;
+  line-height:1;
+  vertical-align:-0.04em;
+  margin-right:.08em;
+}
+.sqrt-number{
+  font-family:"ZenShuzan",sans-serif !important;
+  font-weight:400 !important;
+}
+</style>
+</head>
 <body>
 <header><h1>計算アスリート</h1><p>均等数字対応・スマホ／パソコン対応</p></header>
 <main>
@@ -532,7 +550,7 @@ function build(){
   }
   if(state.kind==="sqrt"){
     let r=makeBalanced6();
-    return r.map(x=>({text:`√${fmt(x*x)}`,answer:x}));
+    return r.map(x=>({text:`<span class="sqrt-symbol">√</span><span class="sqrt-number">${fmt(x*x)}</span>`,answer:x}));
   }
   let cols=[makeMitoriColumn(),makeMitoriColumn(),makeMitoriColumn()];
   if(!cols || cols.length!==3 || cols.some(c=>!Array.isArray(c)||c.length!==15)){
@@ -820,5 +838,5 @@ document.querySelectorAll('input[name="mode"]').forEach(x=>x.addEventListener("c
 $("kind")?.addEventListener("change",updateMitoriOrderVisibility);
 updateMitoriOrderVisibility();
 </script>
-<script>window.addEventListener("DOMContentLoaded",function(){const b=$("saveRecordBtn");if(b)b.onclick=saveRecord;});</script></body>
+</body>
 </html>
