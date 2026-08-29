@@ -272,6 +272,14 @@ select,input.answer{width:100%;padding:11px;border:1px solid #ccc;border-radius:
 .setup-reset-wrap{margin-top:10px;text-align:right}
 #setupResetRecordsBtn{background:#fff;border:1px solid #d8dbe2;color:#777;box-shadow:none;font-size:11px;padding:7px 10px}
 #setupResetRecordsBtn:hover{color:#b91c1c;border-color:#e3b9b9}
+</style><style id="sqrt-symbol-fix">
+.problem .sqrt-symbol{
+  font-family:Arial,"Noto Sans JP",sans-serif !important;
+  font-weight:700 !important;
+  letter-spacing:0 !important;
+  display:inline-block;
+  vertical-align:baseline;
+}
 </style></head>
 <body>
 <header><h1>計算アスリート</h1><p>均等数字対応・スマホ／パソコン対応</p></header>
@@ -442,7 +450,7 @@ function build(){
   }
   if(state.kind==="sqrt"){
     let r=makeBalanced6();
-    return r.map(x=>({text:`√${fmt(x*x)}`,answer:x}));
+    return r.map(x=>({text:`<span class="sqrt-symbol">√</span> ${fmt(x*x)}`,answer:x}));
   }
   let cols=[makeMitoriColumn(),makeMitoriColumn(),makeMitoriColumn()];
   if(!cols || cols.length!==3 || cols.some(c=>!Array.isArray(c)||c.length!==15)){
