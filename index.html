@@ -243,7 +243,17 @@ function start(){
             ? document.querySelector(".mitori-indiv[data-i='2']")
             : document.querySelector(".mitori-indiv[data-i='0']"))
         : document.querySelector(".enter-next");
-      if(first){ first.focus(); first.select(); }
+      if(first){
+        first.focus();
+        first.select();
+        // 見取算を3番→2番→1番で入力する場合は、
+        // 開始直後に3番の解答欄が見える位置まで自動スクロールする。
+        if(state.kind==="mitori" && document.querySelector('input[name="mitoriOrder"]:checked')?.value==="321"){
+          setTimeout(()=>{
+            first.scrollIntoView({behavior:"auto", block:"center", inline:"center"});
+          },30);
+        }
+      }
     },50);
   }
 }
@@ -312,6 +322,13 @@ function setupMitoriSplitInput(){
           field.setSelectionRange(0,0);
         },2000);
       }
+    });
+    // 別の入力欄へ移動したら、前の欄の「2秒後に先頭へ移動」タイマーを必ず解除。
+    // iPhoneではEnterキーがないため、キーボードの矢印や画面タップで移動しても
+    // 前の入力欄へ勝手にフォーカスが戻らないようにする。
+    field.addEventListener("blur",()=>{
+      clearTimeout(idleTimer);
+      idleTimer=null;
     });
     field.addEventListener("keydown",e=>{
       if(e.key==="Enter"){
