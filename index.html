@@ -659,16 +659,31 @@ function setupMitoriSplitInput(){
 }
 
 function formatInputWithCommas(el){
-  const raw=el.value.replace(/,/g,"").replace(/[^0-9-]/g,"");
-  if(!raw) return;
+  // 入力中の先頭0を保持する。カンマだけ自動付与。
+  const before=el.value;
+  const pos=el.selectionStart ?? before.length;
+  const raw=before.replace(/,/g,"").replace(/[^0-9-]/g,"");
+  if(raw==="") return;
+
   const neg=raw.startsWith("-");
   const digits=neg?raw.slice(1):raw;
-  if(!digits) return;
-  const formatted=(neg?"-":"")+Number(digits).toLocaleString("en-US");
-  const pos=el.selectionStart ?? el.value.length;
-  const oldBefore=(el.value.slice(0,pos).match(/,/g)||[]).length;
+  if(digits==="") return;
+
+  // 先頭0を含む文字列をそのまま保持し、3桁区切りだけ付ける。
+  const formattedDigits=digits.replace(/\B(?=(\d{3})+(?!\d))/g,",");
+  const formatted=(neg?"-":"")+formattedDigits;
+
+  const rawBeforeCursor=before.slice(0,pos).replace(/,/g,"").replace(/[^0-9-]/g,"");
   el.value=formatted;
-  const newPos=Math.min(el.value.length,pos+(el.value.slice(0,Math.min(pos,el.value.length)).match(/,/g)||[]).length-oldBefore);
+
+  let newPos=formatted.length;
+  if(rawBeforeCursor!==""){
+    let seen=0;
+    for(let i=0;i<formatted.length;i++){
+      if(formatted[i]!==",") seen++;
+      if(seen>=rawBeforeCursor.length){newPos=i+1;break;}
+    }
+  }
   try{el.setSelectionRange(newPos,newPos);}catch(e){}
 }
 
