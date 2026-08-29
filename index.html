@@ -262,7 +262,7 @@ select,input.answer{width:100%;padding:11px;border:1px solid #ccc;border-radius:
 .record-reset-wrap{margin-top:12px;text-align:right}
 #resetRecordsBtn{background:#fff;border:1px solid #d9dce3;color:#777;box-shadow:none;font-size:11px;padding:7px 10px}
 #resetRecordsBtn:hover{color:#b91c1c;border-color:#e4bcbc}
-#resetConfirm{position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;background:rgba(5,6,9,.72);backdrop-filter:blur(5px)}
+#resetConfirm{position:fixed;inset:0;z-index:10000;display:none;align-items:center;justify-content:center;background:rgba(5,6,9,.72);backdrop-filter:blur(5px)}#resetConfirm:not(.hidden){display:flex}
 .reset-card{width:min(88vw,360px);padding:22px;border-radius:18px;background:#fff;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3)}
 .reset-card h3{margin:0 0 8px;font-size:17px}
 .reset-card p{font-size:12px;color:#666;line-height:1.6}
