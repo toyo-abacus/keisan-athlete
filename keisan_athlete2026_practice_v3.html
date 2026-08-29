@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>計算アスリート2026 練習問題</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Noto Sans JP",sans-serif;background:#f4f5f7;color:#111}
+header{background:#111;color:#fff;padding:18px 16px;text-align:center}header h1{margin:0;font-size:22px}header p{margin:5px 0 0;color:#bbb;font-size:12px}
+main{max-width:900px;margin:auto;padding:14px}.card{background:#fff;border-radius:14px;padding:16px;margin-bottom:14px;box-shadow:0 2px 10px #00000012}
+h2{font-size:18px;margin:0 0 12px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+button,select,input{font:inherit}button{border:0;border-radius:10px;padding:12px 14px;background:#111;color:#fff;font-weight:700;cursor:pointer}
+button.secondary{background:#e9eaed;color:#111}button:disabled{opacity:.45}.choice{display:flex;gap:8px;flex-wrap:wrap}.choice label{border:1px solid #ddd;border-radius:10px;padding:10px 12px;cursor:pointer}.choice input{margin-right:6px}
+select,input.answer{width:100%;padding:11px;border:1px solid #ccc;border-radius:9px;background:#fff}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.timer{font-size:28px;font-weight:800;font-variant-numeric:tabular-nums}.problem{font-size:22px;font-weight:700;letter-spacing:.03em;text-align:center;padding:10px 0}
+.problem-row{display:grid;grid-template-columns:40px 1fr 170px;gap:8px;align-items:center;padding:7px 0;border-bottom:1px solid #eee}.problem-row:last-child{border-bottom:0}
+.num{text-align:right;color:#777}.answer{font-size:18px;text-align:right}.sumbox{margin-top:14px;padding-top:14px;border-top:2px solid #111}.result{padding:14px;border-radius:10px;background:#f0f1f3}.ok{font-weight:800}.ng{font-weight:800}.detail{display:grid;gap:7px}.mitori-wrap{overflow-x:auto}.mitori{min-width:560px;display:grid;grid-template-columns:repeat(3,1fr);gap:24px;text-align:right;font-size:20px;font-variant-numeric:tabular-nums}.mitori-col{display:grid;gap:4px}.mitori-col .head{text-align:center;font-weight:800;margin-bottom:4px}.mitori-col .line{padding:2px 0}.mitori-col .last{border-top:2px solid #111;margin-top:5px;padding-top:5px}.hidden{display:none}.note{font-size:12px;color:#666;line-height:1.6}.badge{display:inline-block;padding:4px 8px;border-radius:99px;background:#eee;font-size:12px}
+@media(max-width:600px){.grid{grid-template-columns:1fr}.problem-row{grid-template-columns:28px 1fr 125px}.problem{font-size:18px}.mitori{font-size:18px;gap:14px}.card{padding:13px}}
+</style>
+</head>
+<body>
+<header><h1>計算アスリート2026 練習問題</h1><p>均等数字対応・スマホ／パソコン対応</p></header>
+<main>
+<section id="setup" class="card">
+<h2>練習設定</h2>
+<div class="grid">
+<div><div class="note">種目</div><select id="kind"><option value="mul">かけ算</option><option value="div">わり算</option><option value="sqrt">開平</option><option value="mitori">見取算</option></select></div>
+<div><div class="note">制限時間</div><select id="limit"><option value="0">なし</option><option value="180">3分</option><option value="120">2分</option><option value="90">1分30秒</option><option value="60">1分</option><option value="45">45秒</option><option value="30">30秒</option><option value="custom">自由設定</option></select></div>
+</div>
+<div id="customTime" class="hidden" style="margin-top:10px"><input id="customSec" type="number" min="1" value="180" placeholder="秒"></div>
+<div style="margin-top:14px"><div class="note">回答方式</div>
+<div class="choice">
+<label><input type="radio" name="mode" value="individual" checked>各問題の答えを入力</label>
+<label><input type="radio" name="mode" value="total">合計だけ入力</label>
+</div></div>
+<div style="margin-top:14px"><button type="button" onclick="start()">問題を作成してスタート</button></div>
+</section>
+
+<section id="work" class="card hidden">
+<div class="top"><span class="badge" id="kindLabel"></span><div class="timer" id="timer">--:--</div></div>
+<div id="problems"></div>
+<div class="sumbox"><div class="note">答えの合計（自分で計算して入力）</div><input id="totalInput" class="answer" inputmode="numeric" placeholder="合計を入力"></div>
+<div style="margin-top:14px;display:flex;gap:8px"><button type="button" onclick="judge(false)">判定</button><button type="button" class="secondary" onclick="location.reload()">最初に戻る</button></div>
+</section>
+
+<section id="result" class="card hidden">
+<h2>結果</h2><div id="resultBody"></div>
+<div style="margin-top:14px"><button type="button" onclick="$('result').classList.add('hidden');$('work').classList.add('hidden');$('setup').classList.remove('hidden')">もう一度、別の問題</button></div>
+</section>
+</main>
+<script>
+let state={kind:"",mode:"",items:[],correctTotal:0,timer:null,remaining:0,ended:false};
+
+const $=id=>document.getElementById(id);
+$("limit").addEventListener("change",()=> $("customTime").classList.toggle("hidden",$("limit").value!=="custom"));
+
+function fmt(n){return Number(n).toLocaleString("ja-JP")}
+function digits4(n){return String(n).padStart(4,"0")}
+function valid4(n){let s=digits4(n);return s[0]!=="0"&&new Set(s).size===4}
+
+function makeBalanced6(){
+  // 6行×4列の「均等数字」。
+  // 各行4桁内で重複なし、各列でも6個すべて異なる。
+  // iPhoneで重くならないよう、全候補を大量生成せずバックトラックで作る。
+  function tryMake(){
+    const rows=[], used=[new Set(),new Set(),new Set(),new Set()];
+    function rec(r){
+      if(r===6) return rows.flat().filter(d=>d===0).length===2;
+      const candidates=[];
+      for(let d0=(r===0?1:0); d0<=9; d0++){
+        if(used[0].has(d0)) continue;
+        for(let d1=0; d1<=9; d1++){
+          if(used[1].has(d1)||d1===d0) continue;
+          for(let d2=0; d2<=9; d2++){
+            if(used[2].has(d2)||d2===d0||d2===d1) continue;
+            for(let d3=0; d3<=9; d3++){
+              if(used[3].has(d3)||d3===d0||d3===d1||d3===d2) continue;
+              candidates.push([d0,d1,d2,d3]);
+            }
+          }
+        }
+      }
+      candidates.sort(()=>Math.random()-0.5);
+      for(const row of candidates.slice(0,Math.min(candidates.length,120))){
+        const zerosNow=rows.flat().filter(d=>d===0).length+row.filter(d=>d===0).length;
+        if(zerosNow>2) continue;
+        // 残り行で2個の0を入れられる可能性を確保
+        const remaining=5-r;
+        if(zerosNow+remaining<2) continue;
+        row.forEach((d,j)=>used[j].add(d)); rows.push(row);
+        if(rec(r+1)) return true;
+        rows.pop(); row.forEach((d,j)=>used[j].delete(d));
+      }
+      return false;
+    }
+    return rec(0) ? rows.map(a=>Number(a.join(""))) : null;
+  }
+  for(let i=0;i<20;i++){const x=tryMake();if(x)return x;}
+  return [3120,2605,1387,8591,9432,4876];
+}
+
+function makeMitoriColumn(){
+  // 15×4=60桁。0～9を各6回。各行は重複なし、千の位0禁止。
+  let counts=Array(10).fill(6), rows=[];
+  function dfs(r){
+    if(r===15)return true;
+    for(let tries=0;tries<200;tries++){
+      let ds=[1,2,3,4,5,6,7,8,9].filter(d=>counts[d]>0);
+      ds.sort(()=>Math.random()-.5);
+      let first=ds[0]; if(counts[first]<=0)continue;
+      let row=[first]; let local=new Set(row);
+      let pool=[0,1,2,3,4,5,6,7,8,9].filter(d=>counts[d]>0&&!local.has(d));
+      pool.sort(()=>Math.random()-.5);
+      while(row.length<4){
+        let cand=pool.filter(d=>counts[d]>0&&!local.has(d));
+        if(!cand.length)break;
+        let d=cand[Math.floor(Math.random()*cand.length)];
+        row.push(d);local.add(d);
+      }
+      if(row.length<4)continue;
+      row.forEach(d=>counts[d]--); rows.push(Number(row.join("")));
+      if(dfs(r+1))return true;
+      row.forEach(d=>counts[d]++);rows.pop();
+    }
+    return false;
+  }
+  for(let attempt=0;attempt<50;attempt++){
+    counts=Array(10).fill(6);rows=[];
+    if(dfs(0))return rows;
+  }
+  return [1387,2605,4876,9315,7240,5698,3102,8459,2674,9031,5826,4173,6905,2381,7564];
+}
+
+function chooseNegatives(vals){
+  // 2列目は5個をマイナス。途中累計が常に1以上になるものを採用。
+  for(let t=0;t<5000;t++){
+    let pos=[]; while(pos.length<5){let p=1+Math.floor(Math.random()*14);if(!pos.includes(p))pos.push(p)} pos.sort((a,b)=>a-b);
+    let set=new Set(pos), acc=0, ok=true, out=[];
+    for(let i=0;i<15;i++){let v=vals[i];if(set.has(i))v=-v;acc+=v;if(acc<=0){ok=false;break}out.push(v)}
+    if(ok)return out;
+  }
+  return vals.map((v,i)=>[2,5,9,12,14].includes(i)?-v:v);
+}
+
+function build(){
+  if(state.kind==="mul"){
+    let a=makeBalanced6(), b=makeBalanced6();
+    return a.map((x,i)=>({text:`${fmt(x)} × ${fmt(b[i])}`,answer:x*b[i]}));
+  }
+  if(state.kind==="div"){
+    let q=makeBalanced6(), d=makeBalanced6();
+    return q.map((x,i)=>({text:`${fmt(x*d[i])} ÷ ${fmt(d[i])}`,answer:x}));
+  }
+  if(state.kind==="sqrt"){
+    let r=makeBalanced6();
+    return r.map(x=>({text:`√${fmt(x*x)}`,answer:x}));
+  }
+  let cols=[makeMitoriColumn(),makeMitoriColumn(),makeMitoriColumn()];
+  cols[1]=chooseNegatives(cols[1]);
+  return {cols, answers:cols.map(c=>c.reduce((a,b)=>a+b,0))};
+}
+
+function start(){
+  state.kind=$("kind").value;
+  state.mode=document.querySelector('input[name="mode"]:checked').value;
+  let lim=$("limit").value;
+  state.remaining=lim==="custom"?Math.max(1,Number($("customSec").value)||180):Number(lim);
+  state.ended=false;
+  let data=build();
+  if(state.kind==="mitori"){
+    state.items=[];state.correctTotal=data.answers.reduce((a,b)=>a+b,0);
+    renderMitori(data.cols);
+  }else{
+    state.items=data;state.correctTotal=data.reduce((a,b)=>a+b.answer,0);
+    renderProblems(data);
+  }
+  $("kindLabel").textContent={mul:"かけ算",div:"わり算",sqrt:"開平",mitori:"見取算"}[state.kind];
+  $("totalInput").value="";
+  $("setup").classList.add("hidden");$("result").classList.add("hidden");$("work").classList.remove("hidden");
+  startTimer();
+}
+
+function renderProblems(items){
+  $("problems").innerHTML=items.map((it,i)=>`
+    <div class="problem-row">
+      <div class="num">${i+1}</div><div class="problem">${it.text}</div>
+      ${state.mode==="individual"?`<input class="answer indiv" data-i="${i}" inputmode="numeric" placeholder="答え">`:""}
+    </div>`).join("");
+}
+function renderMitori(cols){
+  $("problems").innerHTML=`<div class="mitori-wrap"><div class="mitori">
+    ${cols.map((col,c)=>`<div class="mitori-col"><div class="head">${c+1}</div>${col.map((v,i)=>`<div class="line">${v<0?"−":""}${fmt(Math.abs(v))}</div>`).join("")}<div class="last"></div></div>`).join("")}
+  </div></div>`;
+}
+function startTimer(){
+  clearInterval(state.timer);
+  if(state.remaining<=0){$("timer").textContent="∞";return}
+  updateTimer();
+  state.timer=setInterval(()=>{state.remaining--;updateTimer();if(state.remaining<=0){clearInterval(state.timer);judge(true)}},1000);
+}
+function updateTimer(){let s=state.remaining,m=Math.floor(s/60),r=s%60;$("timer").textContent=`${String(m).padStart(2,"0")}:${String(r).padStart(2,"0")}`}
+function val(s){if(s===""||s==null)return null;let n=Number(String(s).replace(/,/g,""));return Number.isFinite(n)?n:null}
+
+function judge(timeout){
+  if(state.ended)return; state.ended=true;clearInterval(state.timer);
+  let inputs=[...document.querySelectorAll(".indiv")].map(x=>val(x.value));
+  let total=val($("totalInput").value);
+  let body="";
+  if(state.kind==="mitori"){
+    let entered=total;
+    body+=`<div class="result">${timeout?"<b>タイムアップ</b><br>":""}<p>あなたの総合計：<b>${entered===null?"未入力":fmt(entered)}</b></p><p>正解の総合計：<b>${fmt(state.correctTotal)}</b></p><p class="${entered===state.correctTotal?"ok":"ng"}">最終判定：${entered===state.correctTotal?"○ 正解":"× 不正解"}</p></div>`;
+  }else if(state.mode==="individual"){
+    body+=`<div class="detail">`;
+    state.items.forEach((it,i)=>{
+      let v=inputs[i];
+      if(v===null) body+=`<div>${i+1}：<b>未入力</b></div>`;
+      else if(v===it.answer) body+=`<div>${i+1}：○</div>`;
+      else body+=`<div>${i+1}：×　正しい答え：<b>${fmt(it.answer)}</b></div>`;
+    });
+    body+=`</div><div class="result" style="margin-top:12px">${timeout?"<b>タイムアップ</b><br>":""}<p>あなたが入力した答えの総合計：<b>${total===null?"未入力":fmt(total)}</b></p><p>正解の総合計：<b>${fmt(state.correctTotal)}</b></p><p class="${total===state.correctTotal?"ok":"ng"}">最終判定：${total===state.correctTotal?"○ 正解":"× 不正解"}</p></div>`;
+  }else{
+    body+=`<div class="result">${timeout?"<b>タイムアップ</b><br>":""}<p>あなたが入力した総合計：<b>${total===null?"未入力":fmt(total)}</b></p><p>正解の総合計：<b>${fmt(state.correctTotal)}</b></p><p class="${total===state.correctTotal?"ok":"ng"}">最終判定：${total===state.correctTotal?"○ 正解":"× 不正解"}</p></div>`;
+  }
+  $("resultBody").innerHTML=body;$("work").classList.add("hidden");$("result").classList.remove("hidden");
+}
+</script>
+</body>
+</html>
