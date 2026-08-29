@@ -127,6 +127,147 @@ select,input.answer{width:100%;padding:11px;border:1px solid #ccc;border-radius:
 </style><style id="setup-record-style">
 #setupRecords{margin:14px 0 4px;padding:13px 14px;border:1px solid #ded5ff;border-radius:13px;background:linear-gradient(135deg,#faf8ff,#f4f1ff)}
 .setup-record-title{font-size:14px;font-weight:900;color:#4c1d95;margin-bottom:8px}.setup-best{font-size:14px;font-weight:900;margin-bottom:9px}.setup-best span{font-size:12px;font-weight:700;color:#666}.setup-top10-title{font-size:11px;font-weight:900;color:#777;margin-bottom:4px}.setup-record-row{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid rgba(124,58,237,.10);font-size:12px}.setup-record-row:last-child{border-bottom:0}.setup-rank{width:27px;font-weight:900;text-align:center}.setup-name{flex:1}.setup-time{font-weight:900}
+</style>
+<style id="ranking-visual-upgrade">
+/* ===== 計算アスリート ランキング強化 ===== */
+#recordBox{
+  border-top:2px solid #111;
+  margin-top:20px;
+  padding-top:18px;
+}
+#recordBox .record-title{
+  font-size:19px;
+  letter-spacing:.02em;
+}
+#recordBox .record-row{
+  align-items:stretch;
+}
+#recordName{
+  background:#fafafa;
+}
+#saveRecordBtn{
+  min-width:108px;
+  font-weight:900;
+}
+.ranking-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin:16px 0 9px;
+}
+.ranking-head-title{
+  font-size:15px;
+  font-weight:1000;
+}
+.ranking-head-kind{
+  font-size:11px;
+  font-weight:900;
+  padding:4px 8px;
+  border-radius:999px;
+  background:#111;
+  color:#fff;
+}
+.ranking-podium{
+  display:grid;
+  grid-template-columns:1fr 1.12fr 1fr;
+  gap:7px;
+  align-items:end;
+  margin:10px 0 14px;
+}
+.podium-card{
+  min-width:0;
+  text-align:center;
+  border-radius:14px 14px 10px 10px;
+  padding:10px 5px 9px;
+  background:#f3f4f6;
+  border:1px solid #e1e3e8;
+}
+.podium-card.first{
+  padding-top:14px;
+  background:linear-gradient(180deg,#fff7d6,#fff);
+  border-color:#e2bd3b;
+  box-shadow:0 8px 22px rgba(0,0,0,.10);
+}
+.podium-card.second{background:linear-gradient(180deg,#f2f3f5,#fff)}
+.podium-card.third{background:linear-gradient(180deg,#f7eee7,#fff)}
+.podium-medal{font-size:25px;line-height:1.1}
+.podium-rank{font-size:10px;font-weight:900;color:#777;margin-top:2px}
+.podium-name{font-size:12px;font-weight:1000;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:4px}
+.podium-time{font-size:14px;font-weight:1000;margin-top:4px}
+.ranking-rest{
+  border:1px solid #e5e7eb;
+  border-radius:12px;
+  overflow:hidden;
+}
+.ranking-rest-row{
+  display:grid;
+  grid-template-columns:34px 1fr auto;
+  gap:6px;
+  align-items:center;
+  padding:8px 10px;
+  border-bottom:1px solid #eceef2;
+  font-size:12px;
+}
+.ranking-rest-row:last-child{border-bottom:0}
+.ranking-rest-rank{font-weight:1000;color:#777;text-align:center}
+.ranking-rest-name{font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ranking-rest-time{font-weight:1000}
+.ranking-empty{
+  padding:15px;
+  text-align:center;
+  color:#777;
+  background:#fafafa;
+  border-radius:12px;
+  font-size:12px;
+}
+#rankFx .rank-card{
+  position:relative;
+  overflow:hidden;
+}
+#rankFx .rank-card::before,
+#rankFx .rank-card::after{
+  content:"✦  ✦  ✦  ✦  ✦";
+  position:absolute;
+  left:-15%;
+  right:-15%;
+  color:rgba(255,255,255,.25);
+  font-size:16px;
+  letter-spacing:15px;
+  animation:rankSpark 2.2s linear infinite;
+}
+#rankFx .rank-card::before{top:12px}
+#rankFx .rank-card::after{bottom:14px;animation-delay:.7s}
+#rankFx .rank-card.rank1{border-color:#e2bd3b;box-shadow:0 0 0 1px rgba(226,189,59,.18),0 25px 80px rgba(0,0,0,.55)}
+#rankFx .rank-card.rank2{border-color:#c9cdd4}
+#rankFx .rank-card.rank3{border-color:#c98d5c}
+#rankFx .rank-message{
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.12em;
+  color:#d9c27a;
+  margin-top:6px;
+}
+@keyframes rankSpark{
+  from{transform:translateX(-8%)}
+  to{transform:translateX(8%)}
+}
+@media(max-width:480px){
+  .ranking-podium{gap:5px}
+  .podium-time{font-size:12px}
+  .podium-name{font-size:11px}
+  #recordName{font-size:16px}
+}
+</style>
+<style id="ranking-reset-style">
+.record-reset-wrap{margin-top:12px;text-align:right}
+#resetRecordsBtn{background:#fff;border:1px solid #d9dce3;color:#777;box-shadow:none;font-size:11px;padding:7px 10px}
+#resetRecordsBtn:hover{color:#b91c1c;border-color:#e4bcbc}
+#resetConfirm{position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;background:rgba(5,6,9,.72);backdrop-filter:blur(5px)}
+.reset-card{width:min(88vw,360px);padding:22px;border-radius:18px;background:#fff;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.reset-card h3{margin:0 0 8px;font-size:17px}
+.reset-card p{font-size:12px;color:#666;line-height:1.6}
+.reset-actions{display:flex;gap:8px;justify-content:center;margin-top:15px}
+.reset-actions button{min-width:100px}
 </style></head>
 <body>
 <header><h1>計算アスリート</h1><p>均等数字対応・スマホ／パソコン対応</p></header>
@@ -178,7 +319,7 @@ select,input.answer{width:100%;padding:11px;border:1px solid #ccc;border-radius:
     <button type="button" id="saveRecordBtn">記録する</button>
   </div>
   <div id="recordMessage" class="record-message"></div>
-  <div id="recordList"></div>
+  <div id="recordList"></div><div class="record-reset-wrap"><button type="button" id="resetRecordsBtn">記録をリセット</button></div>
 </div>
 <div id="rankFx"><div class="rank-card">
   <div class="rank-crown">🏆</div><div class="rank-label">RANK IN</div>
@@ -413,7 +554,26 @@ function saveLocalRecord(){
 function renderLocalRanking(){
   const box=$("recordList");if(!box)return;
   const rs=getLocalRecords().filter(r=>r.kind===state.kind).sort((a,b)=>a.elapsed-b.elapsed).slice(0,10);
-  box.innerHTML=rs.length?'<div class="record-list-title">この端末のTOP10</div>'+rs.map((r,i)=>`<div class="record-item"><span>${i+1}. ${String(r.name).replace(/[&<>"']/g,"")}</span><strong>${r.time}</strong></div>`).join(""):"";
+  if(!rs.length){
+    box.innerHTML='<div class="ranking-head"><div class="ranking-head-title">🏆 この端末のランキング</div></div><div class="ranking-empty">まだ記録がありません</div>';
+    return;
+  }
+  const safe=v=>String(v).replace(/[&<>"']/g,"");
+  const medals=["🥇","🥈","🥉"];
+  const top=rs.slice(0,3);
+  const rest=rs.slice(3);
+  let html=`<div class="ranking-head"><div class="ranking-head-title">🏆 この端末のランキング</div><div class="ranking-head-kind">${setupKindLabel(state.kind)}</div></div>`;
+  html+='<div class="ranking-podium">';
+  [1,0,2].forEach(i=>{
+    if(!top[i])return;
+    const cls=i===0?"first":i===1?"second":"third";
+    html+=`<div class="podium-card ${cls}"><div class="podium-medal">${medals[i]}</div><div class="podium-rank">${i+1}位</div><div class="podium-name">${safe(top[i].name)}</div><div class="podium-time">${top[i].time}</div></div>`;
+  });
+  html+='</div>';
+  if(rest.length){
+    html+='<div class="ranking-rest">'+rest.map((r,i)=>`<div class="ranking-rest-row"><span class="ranking-rest-rank">${i+4}</span><span class="ranking-rest-name">${safe(r.name)}</span><strong class="ranking-rest-time">${r.time}</strong></div>`).join("")+'</div>';
+  }
+  box.innerHTML=html;
 }
 
 function setupKindLabel(k){return ({mul:"かけ算",div:"わり算",sqrt:"開平",mitori:"見取算"}[k]||k)}
@@ -422,10 +582,16 @@ function cleanSetupName(v){return String(v).replace(/[&<>"']/g,"")}
 function renderSetupRecords(){
  const best=$("setupBest"),list=$("setupTop10"),kind=$("kind");if(!best||!list||!kind)return;
  const rs=getSetupRecords().filter(r=>r.kind===kind.value).sort((a,b)=>a.elapsed-b.elapsed).slice(0,10);
- if(!rs.length){best.innerHTML="まだ記録がありません";list.innerHTML='<div style="font-size:12px;color:#888;padding:5px 0">この種目で記録を作ってみよう！</div>';return}
- best.innerHTML=`🥇 最高記録　<strong>${rs[0].time}</strong> <span>${cleanSetupName(rs[0].name)}</span>`;
- list.innerHTML=rs.map((r,i)=>`<div class="setup-record-row"><span class="setup-rank">${i+1}</span><span class="setup-name">${cleanSetupName(r.name)}</span><strong class="setup-time">${r.time}</strong></div>`).join("");
+ const safe=v=>String(v).replace(/[&<>"']/g,"");
+ if(!rs.length){
+   best.innerHTML="まだ記録がありません";
+   list.innerHTML='<div style="font-size:12px;color:#888;padding:5px 0">この種目で記録を作ってみよう！</div>';
+   return;
+ }
+ best.innerHTML=`🥇 最高記録　<strong>${rs[0].time}</strong> <span>${safe(rs[0].name)}</span>`;
+ list.innerHTML=rs.map((r,i)=>`<div class="setup-record-row"><span class="setup-rank">${i===0?"🥇":i===1?"🥈":i===2?"🥉":i+1}</span><span class="setup-name">${safe(r.name)}</span><strong class="setup-time">${r.time}</strong></div>`).join("");
 }
+
 function backToSetup(){
   clearInterval(state.timer);
   state.ended=true;
@@ -619,6 +785,26 @@ window.addEventListener("DOMContentLoaded",function(){
  }
  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",bindSetupRecords);else bindSetupRecords();
  window.addEventListener("load",renderSetupRecords);
+})();
+</script><div id="resetConfirm" class="hidden">
+<div class="reset-card">
+<h3>記録をリセットしますか？</h3>
+<p>この端末に保存されている<br>ランキング記録をすべて削除します。<br><strong>この操作は元に戻せません。</strong></p>
+<div class="reset-actions"><button type="button" class="secondary" id="cancelResetBtn">キャンセル</button><button type="button" id="confirmResetBtn">リセットする</button></div>
+</div></div><script id="ranking-reset-events">
+(function(){
+ function bindReset(){
+  const b=$("resetRecordsBtn"), c=$("cancelResetBtn"), ok=$("confirmResetBtn"), modal=$("resetConfirm");
+  if(b)b.onclick=function(){modal.classList.remove("hidden")};
+  if(c)c.onclick=function(){modal.classList.add("hidden")};
+  if(ok)ok.onclick=function(){
+    localStorage.removeItem("keisanAthleteRecordsV2");
+    modal.classList.add("hidden");
+    try{renderLocalRanking();renderSetupRecords();}catch(e){}
+  };
+ }
+ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",bindReset);else bindReset();
+ window.addEventListener("load",bindReset);
 })();
 </script></body>
 </html>
