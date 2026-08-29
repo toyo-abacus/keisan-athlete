@@ -54,7 +54,25 @@ select,input.answer{width:100%;padding:11px;border:1px solid #ccc;border-radius:
 .mitori,.mitori .line{font-family:"ZenShuzan",sans-serif!important;font-weight:400!important}
 </style>
 
-</head>
+<style id="shuzan-mitori-fix">
+.mitori .line,
+.mitori .head,
+.mitori-wrap .mitori-col,
+.mitori-wrap .mitori-col * {
+  font-family:"ZenShuzan",sans-serif !important;
+  font-weight:400 !important;
+}
+</style><style id="shuzan-answer-input-fix">
+/* 個別回答欄の入力数字も全珠連数字 */
+.answer,
+.answer.indiv,
+.mitori-indiv,
+#totalInput {
+  font-family:"ZenShuzan", sans-serif !important;
+  font-weight:400 !important;
+  font-variant-numeric:normal !important;
+}
+</style></head>
 <body>
 <header><h1>計算アスリート</h1><p>均等数字対応・スマホ／パソコン対応</p></header>
 <main>
@@ -313,6 +331,7 @@ function setupMitoriSplitInput(){
   fields.forEach(field=>{
     let idleTimer=null;
     field.addEventListener("input",()=>{
+      formatInputWithCommas(field);
       clearTimeout(idleTimer);
       // 2秒入力がなければ、現在の入力値の先頭へカーソルを移動。
       // 次に数字を入力すると、入力値の前に追加できる。
@@ -347,6 +366,20 @@ function setupMitoriSplitInput(){
   });
 }
 
+function formatInputWithCommas(el){
+  const raw=el.value.replace(/,/g,"").replace(/[^0-9-]/g,"");
+  if(!raw) return;
+  const neg=raw.startsWith("-");
+  const digits=neg?raw.slice(1):raw;
+  if(!digits) return;
+  const formatted=(neg?"-":"")+Number(digits).toLocaleString("en-US");
+  const pos=el.selectionStart ?? el.value.length;
+  const oldBefore=(el.value.slice(0,pos).match(/,/g)||[]).length;
+  el.value=formatted;
+  const newPos=Math.min(el.value.length,pos+(el.value.slice(0,Math.min(pos,el.value.length)).match(/,/g)||[]).length-oldBefore);
+  try{el.setSelectionRange(newPos,newPos);}catch(e){}
+}
+
 function setupTotalEnter(){
   const total=$("totalInput");
   if(!total) return;
@@ -357,6 +390,7 @@ function setupTotalEnter(){
   // かけ算・わり算・見取算・開平、すべての総合計入力で
   // 「入力→2秒停止→カーソルを先頭へ」を使用する。
   total.addEventListener("input",()=>{
+    formatInputWithCommas(total);
     if(total._splitTimer) clearTimeout(total._splitTimer);
     if(total.value.length>0){
       total._splitTimer=setTimeout(()=>{
