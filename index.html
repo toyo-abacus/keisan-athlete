@@ -121,286 +121,23 @@ select,input.answer{width:100%;padding:11px;border:1px solid #ccc;border-radius:
   color:#777;
 }
 </style>
-
-<style id="athlete-premium-design">
-:root{
-  --ink:#101114;
-  --muted:#6f7480;
-  --line:#e4e7ec;
-  --paper:#ffffff;
-  --bg:#f3f5f8;
-  --accent:#7c3aed;
-  --accent2:#4f46e5;
-  --accent-soft:#f1edff;
-  --shadow:0 14px 40px rgba(16,17,20,.10);
-}
-html{background:var(--bg)}
-body{
-  min-height:100vh;
-  background:
-    radial-gradient(circle at 85% 0%,rgba(124,58,237,.10),transparent 28%),
-    linear-gradient(180deg,#eef1f6 0%,#f7f8fa 45%,#eef1f5 100%);
-  color:var(--ink);
-  letter-spacing:.01em;
-}
-header{
-  position:relative;
-  overflow:hidden;
-  background:
-    radial-gradient(circle at 78% 35%,rgba(124,58,237,.30),transparent 25%),
-    linear-gradient(135deg,#090a0d 0%,#15161b 55%,#0b0c10 100%);
-  padding:22px 16px 20px;
-  border-bottom:1px solid rgba(255,255,255,.08);
-  box-shadow:0 5px 22px rgba(0,0,0,.16);
-}
-header:before{
-  content:"";
-  position:absolute;
-  left:0;right:0;top:0;height:3px;
-  background:linear-gradient(90deg,#7c3aed,#4f46e5,#a78bfa);
-}
-header:after{
-  content:"";
-  position:absolute;
-  width:180px;height:180px;
-  right:-80px;top:-100px;
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:50%;
-  box-shadow:0 0 0 22px rgba(255,255,255,.025),0 0 0 44px rgba(255,255,255,.018);
-}
-header h1{
-  position:relative;
-  z-index:1;
-  font-size:clamp(23px,5vw,30px);
-  font-weight:900;
-  letter-spacing:.08em;
-  text-shadow:0 2px 12px rgba(0,0,0,.35);
-}
-header p{
-  position:relative;
-  z-index:1;
-  margin-top:6px;
-  color:#c5c7cf;
-  font-size:12px;
-  letter-spacing:.08em;
-}
-main{max-width:960px;padding:22px 16px 34px}
-.card{
-  position:relative;
-  border:1px solid rgba(20,23,30,.07);
-  border-radius:20px;
-  padding:20px;
-  margin-bottom:16px;
-  box-shadow:var(--shadow);
-  background:rgba(255,255,255,.96);
-}
-.card:before{
-  content:"";
-  position:absolute;
-  left:0;top:22px;bottom:22px;width:3px;
-  border-radius:0 4px 4px 0;
-  background:linear-gradient(180deg,var(--accent),var(--accent2));
-  opacity:.9;
-}
-#setup h2,#result h2{
-  font-size:19px;
-  font-weight:900;
-  letter-spacing:.04em;
-  padding-bottom:12px;
-  border-bottom:1px solid var(--line);
-}
-#setup h2:after,#result h2:after{
-  content:"";
-  display:block;
-  width:42px;height:3px;
-  margin-top:9px;
-  border-radius:99px;
-  background:linear-gradient(90deg,var(--accent),var(--accent2));
-}
-.note{
-  color:var(--muted);
-  font-size:12px;
-  font-weight:600;
-  letter-spacing:.02em;
-}
-select,input.answer{
-  border:1px solid #d8dce4;
-  box-shadow:inset 0 1px 2px rgba(16,17,20,.03);
-  transition:border-color .15s,box-shadow .15s,transform .15s;
-}
-select:focus,input.answer:focus{
-  outline:none;
-  border-color:#8b72ee;
-  box-shadow:0 0 0 4px rgba(124,58,237,.12);
-}
-.choice{gap:8px}
-.choice label{
-  background:#fafbfc;
-  border:1px solid #dfe3e9;
-  color:#252832;
-  font-weight:700;
-  transition:.15s;
-}
-.choice label:has(input:checked){
-  border-color:#9a84ee;
-  background:var(--accent-soft);
-  color:#4c1d95;
-  box-shadow:0 4px 12px rgba(124,58,237,.10);
-}
-.choice label:hover{transform:translateY(-1px);border-color:#b8addf}
-button{
-  position:relative;
-  overflow:hidden;
-  border-radius:11px;
-  padding:12px 17px;
-  background:linear-gradient(135deg,#17181d,#08090b);
-  box-shadow:0 6px 16px rgba(0,0,0,.15);
-  letter-spacing:.03em;
-  transition:transform .15s,box-shadow .15s,filter .15s;
-}
-button:after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(110deg,transparent 25%,rgba(255,255,255,.13) 50%,transparent 75%);
-  transform:translateX(-120%);
-  transition:transform .45s;
-}
-button:hover{transform:translateY(-1px);box-shadow:0 9px 20px rgba(0,0,0,.18)}
-button:hover:after{transform:translateX(120%)}
-button.secondary{
-  background:#eef0f4;
-  box-shadow:none;
-  color:#292c33;
-}
-#work .top{
-  padding-bottom:15px;
-  margin-bottom:4px;
-  border-bottom:1px solid var(--line);
-}
-.badge{
-  padding:6px 11px;
-  background:var(--accent-soft);
-  color:#5b21b6;
-  border:1px solid #ddd3ff;
-  font-weight:800;
-  letter-spacing:.04em;
-}
-.timer{
-  min-width:86px;
-  text-align:center;
-  padding:7px 12px;
-  border-radius:10px;
-  background:#111318;
-  color:#fff;
-  font-size:25px;
-  line-height:1;
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);
-}
-.problem-row{
-  padding:10px 0;
-  border-bottom:1px solid #eceef2;
-  min-height:58px;
-}
-.problem-row:last-child{border-bottom:0}
-.num{
-  font-size:12px;
-  font-weight:800;
-  color:#9aa0ab;
-}
-.problem{
-  font-weight:900;
-  color:#101114;
-}
-.answer{
-  border-radius:10px!important;
-  background:#fff;
-  font-weight:800;
-}
-.sumbox{
-  margin-top:17px;
-  padding:16px 0 0;
-  border-top:2px solid #16171a;
-}
-.sumbox .note{font-weight:800;color:#4e535d}
-.split-note{
-  color:#858b96;
-  padding-left:2px;
-}
-#resultBody .result{
-  border:1px solid #e1e4ea;
-  background:linear-gradient(135deg,#fafbfc,#f2f3f6);
-}
-.ok{
-  color:#166534;
-  font-size:18px;
-}
-.ng{
-  color:#b91c1c;
-  font-size:18px;
-}
-.detail{margin-top:10px}
-.mitori-wrap{
-  border-radius:12px;
-  background:#fbfbfc;
-  border:1px solid #eceef2;
-  padding:8px 10px;
-}
-.mitori{
-  font-weight:700;
-}
-.mitori-answers{margin-top:18px}
-.mitori-answer input{font-weight:800}
-.hidden{display:none!important}
-
-@media(max-width:600px){
-  header{padding:18px 13px 17px}
-  main{padding:13px 10px 24px}
-  .card{border-radius:16px;padding:15px;margin-bottom:12px}
-  .card:before{top:18px;bottom:18px}
-  #setup h2,#result h2{font-size:17px}
-  .choice label{padding:9px 10px;font-size:13px}
-  .problem-row{
-    grid-template-columns:25px minmax(0,1fr) clamp(72px,21vw,98px);
-    gap:6px;
-    min-height:54px;
-  }
-  .problem{font-size:clamp(16px,4.5vw,19px)}
-  .answer{font-size:16px!important;padding:10px 6px!important}
-  .timer{font-size:23px}
-  button{padding:11px 14px}
-}
-@media(min-width:601px){
-  #setup .grid>div{background:#fafbfc;border:1px solid #eceef2;border-radius:13px;padding:12px}
-  #setup .grid>div .note{margin-bottom:6px}
-}
-</style>
-<style id="record-style">
-#recordBox{margin-top:18px;padding-top:16px;border-top:1px solid #e4e7ec}.record-title{font-weight:900;font-size:16px;margin-bottom:9px}.record-row{display:flex;gap:8px}#recordName{flex:1;min-width:0;border:1px solid #d8dce4;border-radius:10px;padding:11px 10px;font-size:16px}.record-message{margin-top:8px;font-size:12px;color:#5f6470}.record-list{margin-top:12px}.record-list-title{font-size:12px;font-weight:900;color:#6f7480;margin-bottom:5px}.record-item{display:flex;justify-content:space-between;padding:7px 9px;border-bottom:1px solid #eceef2;font-size:13px}@media(max-width:600px){.record-row{gap:6px}.record-row button{white-space:nowrap;padding:10px 12px}}
-</style>
-<style id="sqrt-mobile-only-fix">
-/* 開平の√だけ通常フォント。後ろの数字は既存の珠算数字フォントを維持 */
-.sqrt-symbol{
-  font-family:"Times New Roman", "Noto Serif", serif !important;
-  font-weight:400 !important;
-  font-style:normal !important;
-  display:inline-block;
-  font-size:1.25em;
-  line-height:1;
-  vertical-align:-0.04em;
-  margin-right:.08em;
-}
-.sqrt-number{
-  font-family:"ZenShuzan",sans-serif !important;
-  font-weight:400 !important;
-}
-</style>
-</head>
+<style id="safe-ranking-style">
+#recordBox{margin-top:18px;padding-top:16px;border-top:1px solid #e4e7ec}.record-title{font-weight:900;font-size:17px;margin-bottom:9px}.record-row{display:flex;gap:8px}#recordName{flex:1;min-width:0;border:1px solid #d8dce4;border-radius:10px;padding:11px 10px;font-size:16px}.record-message{margin-top:8px;font-size:12px;color:#5f6470}.record-list{margin-top:12px}.record-list-title{font-size:12px;font-weight:900;color:#6f7480;margin-bottom:6px}.record-item{display:flex;justify-content:space-between;padding:8px 10px;border-bottom:1px solid #eceef2;font-size:13px}.record-item strong{font-weight:900}
+#rankFx{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:rgba(5,6,9,.82);backdrop-filter:blur(7px);opacity:0;pointer-events:none;transition:opacity .25s}#rankFx.show{opacity:1;pointer-events:auto}.rank-card{width:min(88vw,420px);padding:30px 22px;text-align:center;border-radius:22px;background:linear-gradient(145deg,#181a22,#08090c);color:#fff;border:1px solid rgba(255,255,255,.13);box-shadow:0 25px 70px rgba(0,0,0,.5);transform:scale(.8);transition:transform .3s cubic-bezier(.2,.9,.2,1.2)}#rankFx.show .rank-card{transform:scale(1)}.rank-crown{font-size:48px;line-height:1}.rank-label{font-size:12px;letter-spacing:.18em;color:#b9a9ff;font-weight:900}.rank-number{font-size:58px;font-weight:1000;line-height:1.05;margin:7px 0}.rank-number small{font-size:22px}.rank-name{font-size:22px;font-weight:900}.rank-time{font-size:28px;font-weight:900;margin-top:9px}
+</style><style id="setup-record-style">
+#setupRecords{margin:14px 0 4px;padding:13px 14px;border:1px solid #ded5ff;border-radius:13px;background:linear-gradient(135deg,#faf8ff,#f4f1ff)}
+.setup-record-title{font-size:14px;font-weight:900;color:#4c1d95;margin-bottom:8px}.setup-best{font-size:14px;font-weight:900;margin-bottom:9px}.setup-best span{font-size:12px;font-weight:700;color:#666}.setup-top10-title{font-size:11px;font-weight:900;color:#777;margin-bottom:4px}.setup-record-row{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid rgba(124,58,237,.10);font-size:12px}.setup-record-row:last-child{border-bottom:0}.setup-rank{width:27px;font-weight:900;text-align:center}.setup-name{flex:1}.setup-time{font-weight:900}
+</style></head>
 <body>
 <header><h1>計算アスリート</h1><p>均等数字対応・スマホ／パソコン対応</p></header>
 <main>
 <section id="setup" class="card">
-<h2>練習設定</h2>
+<h2>練習設定</h2><div id="setupRecords">
+<div class="setup-record-title">🏆 選択中の種目の記録</div>
+<div id="setupBest" class="setup-best"></div>
+<div class="setup-top10-title">この端末のTOP10</div>
+<div id="setupTop10"></div>
+</div>
 <div class="grid">
 <div><div class="note">種目</div><select id="kind"><option value="mul">かけ算</option><option value="div">わり算</option><option value="sqrt">開平</option><option value="mitori">見取算</option></select></div>
 <div><div class="note">制限時間</div><select id="limit"><option value="0">なし</option><option value="180">3分</option><option value="120">2分</option><option value="90">1分30秒</option><option value="60">1分</option><option value="45">45秒</option><option value="30">30秒</option><option value="custom">自由設定</option></select></div>
@@ -435,15 +172,25 @@ button.secondary{
 
 <section id="result" class="card hidden">
 <h2>結果</h2><div id="resultBody"></div><div id="recordBox" class="hidden">
-  <div class="record-title">🏆 自己ベストを記録</div>
-  <div class="record-row"><input id="recordName" type="text" maxlength="12" placeholder="名前を入力"><button type="button" id="saveRecordBtn">記録する</button></div>
-  <div id="recordMessage" class="record-message"></div><div id="recordList"></div>
+  <div class="record-title">🏆 記録を登録</div>
+  <div class="record-row">
+    <input id="recordName" type="text" maxlength="12" placeholder="名前を入力">
+    <button type="button" id="saveRecordBtn">記録する</button>
+  </div>
+  <div id="recordMessage" class="record-message"></div>
+  <div id="recordList"></div>
 </div>
+<div id="rankFx"><div class="rank-card">
+  <div class="rank-crown">🏆</div><div class="rank-label">RANK IN</div>
+  <div class="rank-number" id="rankNumber"></div><div class="rank-name" id="rankName"></div>
+  <div class="rank-time" id="rankTime"></div>
+  <button type="button" id="rankClose">OK</button>
+</div></div>
 <div style="margin-top:14px"><button type="button" onclick="$('result').classList.add('hidden');$('work').classList.add('hidden');$('setup').classList.remove('hidden')">もう一度、別の問題</button></div>
 </section>
 </main>
 <script>
-let state={kind:"",mode:"",items:[],correctTotal:0,timer:null,remaining:0,elapsed:0,ended:false};
+let state={kind:"",mode:"",items:[],correctTotal:0,timer:null,remaining:0,startedAt:0,elapsed:0,ended:false};
 
 const $=id=>document.getElementById(id);
 function updateMitoriOrderVisibility(){
@@ -550,7 +297,7 @@ function build(){
   }
   if(state.kind==="sqrt"){
     let r=makeBalanced6();
-    return r.map(x=>({text:`<span class="sqrt-symbol">√</span><span class="sqrt-number">${fmt(x*x)}</span>`,answer:x}));
+    return r.map(x=>({text:`√${fmt(x*x)}`,answer:x}));
   }
   let cols=[makeMitoriColumn(),makeMitoriColumn(),makeMitoriColumn()];
   if(!cols || cols.length!==3 || cols.some(c=>!Array.isArray(c)||c.length!==15)){
@@ -643,29 +390,41 @@ function renderMitori(cols){
   </div>`:""}`;
   if(state.mode==="individual") setupMitoriSplitInput();
 }
-const RECORD_KEY="keisanAthleteRecordsV1";
-function getRecords(){try{return JSON.parse(localStorage.getItem(RECORD_KEY)||"[]")}catch(e){return[]}}
-function escapeHtml(v){return String(v).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
-function isPerfectResult(){
-  if(state.mode==="total") return val($("totalInput").value)===state.correctTotal;
-  if(state.kind==="mitori"){
-    const a=[...document.querySelectorAll(".mitori-indiv")].map(x=>val(x.value));
-    return a.length===state.mitoriAnswers.length && a.every((v,i)=>v!==null&&v===state.mitoriAnswers[i]) && val($("totalInput").value)===state.correctTotal;
-  }
-  const a=[...document.querySelectorAll(".indiv")];
-  return a.length===state.items.length && a.every((x,i)=>val(x.value)===state.items[i].answer) && val($("totalInput").value)===state.correctTotal;
+const RECORD_KEY="keisanAthleteRecordsV2";
+function getLocalRecords(){try{return JSON.parse(localStorage.getItem(RECORD_KEY)||"[]")}catch(e){return[]}}
+function perfectForRecord(){
+  // 記録登録の条件は「最終判定の総合計が正解」であること。
+  // 個別の答えが間違っていても、総合計が正解なら記録できる。
+  return val($("totalInput").value)===state.correctTotal;
 }
-function saveRecord(){
-  if(!isPerfectResult()){ $("recordMessage").textContent="全問正解の記録のみ保存できます。"; return; }
+function saveLocalRecord(){
+  if(!perfectForRecord()){$("recordMessage").textContent="総合計が正解した記録のみ保存できます。";return}
   const name=($("recordName").value||"").trim()||"名無し";
-  const records=getRecords(); records.push({name,kind:state.kind,elapsed:state.elapsed,time:elapsedText(),date:new Date().toISOString()});
-  records.sort((a,b)=>a.elapsed-b.elapsed); localStorage.setItem(RECORD_KEY,JSON.stringify(records.slice(0,50)));
-  $("recordMessage").textContent="この端末に記録しました。"; renderRecords();
+  const rec={name,kind:state.kind,elapsed:Number(state.elapsed)||0,time:elapsedText(),date:new Date().toISOString()};
+  const a=getLocalRecords();a.push(rec);
+  const same=a.filter(r=>r.kind===state.kind).sort((x,y)=>x.elapsed-y.elapsed).slice(0,10);
+  const other=a.filter(r=>r.kind!==state.kind);
+  localStorage.setItem(RECORD_KEY,JSON.stringify(other.concat(same)));
+  const rank=same.indexOf(rec)+1;
+  $("recordMessage").textContent=rank<=10?"ランキングに登録しました。":"Top10圏外でした。";
+  renderLocalRanking();
+  if(rank<=10){$("rankNumber").innerHTML=rank+"<small>位</small>";$("rankName").textContent=name;$("rankTime").textContent=rec.time;$("rankFx").classList.add("show");setTimeout(()=>$("rankFx").classList.remove("show"),5000)}
 }
-function renderRecords(){
-  const box=$("recordList"); if(!box)return;
-  const rs=getRecords().filter(r=>r.kind===state.kind).slice(0,10);
-  box.innerHTML=rs.length?'<div class="record-list-title">この端末の記録</div>'+rs.map((r,i)=>`<div class="record-item"><span>${i+1}. ${escapeHtml(r.name)}</span><strong>${r.time}</strong></div>`).join(""):"";
+function renderLocalRanking(){
+  const box=$("recordList");if(!box)return;
+  const rs=getLocalRecords().filter(r=>r.kind===state.kind).sort((a,b)=>a.elapsed-b.elapsed).slice(0,10);
+  box.innerHTML=rs.length?'<div class="record-list-title">この端末のTOP10</div>'+rs.map((r,i)=>`<div class="record-item"><span>${i+1}. ${String(r.name).replace(/[&<>"']/g,"")}</span><strong>${r.time}</strong></div>`).join(""):"";
+}
+
+function setupKindLabel(k){return ({mul:"かけ算",div:"わり算",sqrt:"開平",mitori:"見取算"}[k]||k)}
+function getSetupRecords(){try{return JSON.parse(localStorage.getItem("keisanAthleteRecordsV2")||"[]")}catch(e){return[]}}
+function cleanSetupName(v){return String(v).replace(/[&<>"']/g,"")}
+function renderSetupRecords(){
+ const best=$("setupBest"),list=$("setupTop10"),kind=$("kind");if(!best||!list||!kind)return;
+ const rs=getSetupRecords().filter(r=>r.kind===kind.value).sort((a,b)=>a.elapsed-b.elapsed).slice(0,10);
+ if(!rs.length){best.innerHTML="まだ記録がありません";list.innerHTML='<div style="font-size:12px;color:#888;padding:5px 0">この種目で記録を作ってみよう！</div>';return}
+ best.innerHTML=`🥇 最高記録　<strong>${rs[0].time}</strong> <span>${cleanSetupName(rs[0].name)}</span>`;
+ list.innerHTML=rs.map((r,i)=>`<div class="setup-record-row"><span class="setup-rank">${i+1}</span><span class="setup-name">${cleanSetupName(r.name)}</span><strong class="setup-time">${r.time}</strong></div>`).join("");
 }
 function backToSetup(){
   clearInterval(state.timer);
@@ -769,39 +528,32 @@ function setupTotalEnter(){
 
 function startTimer(){
   clearInterval(state.timer);
+  state.startedAt=Date.now();
   state.elapsed=0;
   if(state.remaining<=0){
-    updateElapsedTimer();
-    state.timer=setInterval(()=>{state.elapsed++;updateElapsedTimer()},1000);
+    $("timer").textContent="∞";
     return;
   }
   updateTimer();
   state.timer=setInterval(()=>{
     state.remaining--;
-    state.elapsed++;
-    updateTimer();
     if(state.remaining<=0){
+      state.elapsed=Math.floor((Date.now()-state.startedAt)/1000);
       clearInterval(state.timer);
+      updateTimer();
       judge(true);
+      return;
     }
+    updateTimer();
   },1000);
 }
-function updateTimer(){
-  let s=state.remaining,m=Math.floor(s/60),r=s%60;
-  $("timer").textContent=`${String(m).padStart(2,"0")}:${String(r).padStart(2,"0")}`;
-}
-function updateElapsedTimer(){
-  let s=state.elapsed,m=Math.floor(s/60),r=s%60;
-  $("timer").textContent=`${String(m).padStart(2,"0")}:${String(r).padStart(2,"0")}`;
-}
-function elapsedText(){
-  let s=state.elapsed,m=Math.floor(s/60),r=s%60;
-  return `${String(m).padStart(2,"0")}:${String(r).padStart(2,"0")}`;
-}
+function updateTimer(){let s=state.remaining,m=Math.floor(s/60),r=s%60;$("timer").textContent=`${String(m).padStart(2,"0")}:${String(r).padStart(2,"0")}`}
+function elapsedText(){let s=state.elapsed,m=Math.floor(s/60),r=s%60;return `${String(m).padStart(2,"0")}:${String(r).padStart(2,"0")}`}
 function val(s){if(s===""||s==null)return null;let n=Number(String(s).replace(/,/g,""));return Number.isFinite(n)?n:null}
 
 function judge(timeout){
   if(state.ended)return; state.ended=true;clearInterval(state.timer);
+  if(state.startedAt) state.elapsed=Math.floor((Date.now()-state.startedAt)/1000);
   let inputs=[...document.querySelectorAll(".indiv")].map(x=>val(x.value));
   let total=val($("totalInput").value);
   let body="";
@@ -810,10 +562,10 @@ function judge(timeout){
       const vals=[...document.querySelectorAll(".mitori-indiv")].map(x=>val(x.value));
       const entered=vals.every(v=>v!==null)?vals.reduce((a,b)=>a+b,0):null;
       body+=`<div class="detail">${vals.map((v,i)=>v===null?`<div>${i+1}列：<b>未入力</b></div>`:v===state.mitoriAnswers[i]?`<div>${i+1}列：○</div>`:`<div>${i+1}列：×　正しい答え：<b>${fmt(state.mitoriAnswers[i])}</b></div>`).join("")}</div>`;
-      body+=`<div class="result" style="margin-top:12px">${timeout?"<b>タイムアップ</b><br>":""}${state.remaining<=0?`<p>経過時間：<b>${elapsedText()}</b></p>`:""}<p>あなたが入力した答えの総合計：<b>${entered===null?"未入力":fmt(entered)}</b></p><p>正解の総合計：<b>${fmt(state.correctTotal)}</b></p><p class="${entered===state.correctTotal?"ok":"ng"}">最終判定：${entered===state.correctTotal?"○ 正解":"× 不正解"}</p></div>`;
+      body+=`<div class="result" style="margin-top:12px">${timeout?"<b>タイムアップ</b><br>":""}<p>あなたが入力した答えの総合計：<b>${entered===null?"未入力":fmt(entered)}</b></p><p>正解の総合計：<b>${fmt(state.correctTotal)}</b></p><p class="${entered===state.correctTotal?"ok":"ng"}">最終判定：${entered===state.correctTotal?"○ 正解":"× 不正解"}</p></div>`;
     }else{
       let entered=total;
-      body+=`<div class="result">${timeout?"<b>タイムアップ</b><br>":""}${state.remaining<=0?`<p>経過時間：<b>${elapsedText()}</b></p>`:""}<p>あなたの総合計：<b>${entered===null?"未入力":fmt(entered)}</b></p><p>正解の総合計：<b>${fmt(state.correctTotal)}</b></p><p class="${entered===state.correctTotal?"ok":"ng"}">最終判定：${entered===state.correctTotal?"○ 正解":"× 不正解"}</p></div>`;
+      body+=`<div class="result">${timeout?"<b>タイムアップ</b><br>":""}<p>あなたの総合計：<b>${entered===null?"未入力":fmt(entered)}</b></p><p>正解の総合計：<b>${fmt(state.correctTotal)}</b></p><p class="${entered===state.correctTotal?"ok":"ng"}">最終判定：${entered===state.correctTotal?"○ 正解":"× 不正解"}</p></div>`;
     }
   }else if(state.mode==="individual"){
     body+=`<div class="detail">`;
@@ -823,20 +575,50 @@ function judge(timeout){
       else if(v===it.answer) body+=`<div>${i+1}：○</div>`;
       else body+=`<div>${i+1}：×　正しい答え：<b>${fmt(it.answer)}</b></div>`;
     });
-    body+=`</div><div class="result" style="margin-top:12px">${timeout?"<b>タイムアップ</b><br>":""}${state.remaining<=0?`<p>経過時間：<b>${elapsedText()}</b></p>`:""}<p>あなたが入力した答えの総合計：<b>${total===null?"未入力":fmt(total)}</b></p><p>正解の総合計：<b>${fmt(state.correctTotal)}</b></p><p class="${total===state.correctTotal?"ok":"ng"}">最終判定：${total===state.correctTotal?"○ 正解":"× 不正解"}</p></div>`;
+    body+=`</div><div class="result" style="margin-top:12px">${timeout?"<b>タイムアップ</b><br>":""}<p>あなたが入力した答えの総合計：<b>${total===null?"未入力":fmt(total)}</b></p><p>正解の総合計：<b>${fmt(state.correctTotal)}</b></p><p class="${total===state.correctTotal?"ok":"ng"}">最終判定：${total===state.correctTotal?"○ 正解":"× 不正解"}</p></div>`;
   }else{
-    body+=`<div class="result">${timeout?"<b>タイムアップ</b><br>":""}${state.remaining<=0?`<p>経過時間：<b>${elapsedText()}</b></p>`:""}<p>あなたが入力した総合計：<b>${total===null?"未入力":fmt(total)}</b></p><p>正解の総合計：<b>${fmt(state.correctTotal)}</b></p><p class="${total===state.correctTotal?"ok":"ng"}">最終判定：${total===state.correctTotal?"○ 正解":"× 不正解"}</p></div>`;
+    body+=`<div class="result">${timeout?"<b>タイムアップ</b><br>":""}<p>あなたが入力した総合計：<b>${total===null?"未入力":fmt(total)}</b></p><p>正解の総合計：<b>${fmt(state.correctTotal)}</b></p><p class="${total===state.correctTotal?"ok":"ng"}">最終判定：${total===state.correctTotal?"○ 正解":"× 不正解"}</p></div>`;
   }
   $("resultBody").innerHTML=body;
-  $("recordBox").classList.remove("hidden");
-  $("recordName").value="";
-  $("recordMessage").textContent="";
-  renderRecords();
+  const rb=$("recordBox"); if(rb){rb.classList.remove("hidden");$("recordName").value="";$("recordMessage").textContent="";}
+  renderLocalRanking();
 $("work").classList.add("hidden");$("result").classList.remove("hidden");
 }
 document.querySelectorAll('input[name="mode"]').forEach(x=>x.addEventListener("change",updateMitoriOrderVisibility));
 $("kind")?.addEventListener("change",updateMitoriOrderVisibility);
 updateMitoriOrderVisibility();
 </script>
-</body>
+<script id="safe-judge-bind">
+window.addEventListener("DOMContentLoaded",function(){
+  const judgeBtn=$("judgeBtn");
+  if(judgeBtn){
+    judgeBtn.type="button";
+    judgeBtn.onclick=function(e){e.preventDefault();judge(false);};
+  }
+  const startBtn=$("startBtn");
+  if(startBtn) startBtn.type="button";
+});
+</script><script id="safe-ranking-events">
+(function(){
+  function bindRecord(){
+    const b=$("saveRecordBtn");
+    if(b){b.type="button";b.onclick=function(e){e.preventDefault();saveLocalRecord();return false;};}
+    const c=$("rankClose");
+    if(c){c.type="button";c.onclick=function(e){e.preventDefault();$("rankFx").classList.remove("show");return false;};}
+  }
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",bindRecord);
+  else bindRecord();
+  window.addEventListener("load",bindRecord);
+})();
+</script><script id="setup-record-events">
+(function(){
+ function bindSetupRecords(){
+  const k=$("kind");
+  if(k&&!k.dataset.recordBound){k.addEventListener("change",renderSetupRecords);k.dataset.recordBound="1";}
+  renderSetupRecords();
+ }
+ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",bindSetupRecords);else bindSetupRecords();
+ window.addEventListener("load",renderSetupRecords);
+})();
+</script></body>
 </html>
