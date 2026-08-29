@@ -72,12 +72,6 @@ select,input.answer{width:100%;padding:11px;border:1px solid #ccc;border-radius:
   font-weight:400 !important;
   font-variant-numeric:normal !important;
 }
-</style><style id="division-mobile-answer-size">
-@media (max-width:600px){
-  body.division-mode .problem-row{grid-template-columns:28px minmax(0,1fr) 88px}
-  body.division-mode .problem{font-size:18px}
-  body.division-mode .answer{width:100%;box-sizing:border-box;font-size:15px}
-}
 </style></head>
 <body>
 <header><h1>計算アスリート</h1><p>均等数字対応・スマホ／パソコン対応</p></header>
@@ -239,14 +233,9 @@ function build(){
   return {cols, answers:cols.map(c=>c.reduce((a,b)=>a+b,0))};
 }
 
-function updateDivisionClass(){
-  const kind=$("kind")?.value;
-  document.body.classList.toggle("division-mode", kind==="division");
-}
 function start(){
   state.kind=$("kind").value;
   state.mode=document.querySelector('input[name="mode"]:checked').value;
-  updateDivisionClass();
   let lim=$("limit").value;
   state.remaining=lim==="custom"?Math.max(1,Number($("customSec").value)||180):Number(lim);
   state.ended=false;
@@ -462,7 +451,7 @@ function judge(timeout){
   $("resultBody").innerHTML=body;$("work").classList.add("hidden");$("result").classList.remove("hidden");
 }
 document.querySelectorAll('input[name="mode"]').forEach(x=>x.addEventListener("change",updateMitoriOrderVisibility));
-$("kind")?.addEventListener("change",updateMitoriOrderVisibility);\n$("kind")?.addEventListener("change",updateDivisionClass);
+$("kind")?.addEventListener("change",updateMitoriOrderVisibility);
 updateMitoriOrderVisibility();
 </script>
 </body>
