@@ -113,7 +113,15 @@ select,input.answer{width:100%;padding:11px;border:1px solid #ccc;border-radius:
     grid-template-columns:32px minmax(0,1fr) 100px;
   }
 }
-</style></head>
+</style><style id="split-input-note-style">
+.split-note{
+  margin-top:6px;
+  font-size:11px;
+  line-height:1.5;
+  color:#777;
+}
+</style>
+</head>
 <body>
 <header><h1>計算アスリート</h1><p>均等数字対応・スマホ／パソコン対応</p></header>
 <main>
@@ -143,7 +151,11 @@ select,input.answer{width:100%;padding:11px;border:1px solid #ccc;border-radius:
 <section id="work" class="card hidden">
 <div class="top"><span class="badge" id="kindLabel"></span><div class="timer" id="timer">--:--</div></div>
 <div id="problems"></div>
-<div class="sumbox"><div class="note">答えの総合計（自分で計算して入力）</div><input id="totalInput" class="answer" inputmode="numeric" placeholder="合計を入力"></div>
+<div class="sumbox">
+  <div class="note">答えの総合計（自分で計算して入力）</div>
+  <input id="totalInput" class="answer" inputmode="numeric" placeholder="合計を入力">
+  <div class="split-note">※ 分割入力対応：下の桁から入力して、2秒間入力を止めるとカーソルが先頭へ移動します。その後、上の桁を入力できます。</div>
+</div>
 <div style="margin-top:14px;display:flex;gap:8px"><button type="button" onclick="judge(false)">判定</button><button type="button" class="secondary" onclick="backToSetup()">最初に戻る</button></div>
 </section>
 
